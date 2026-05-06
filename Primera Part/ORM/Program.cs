@@ -1,20 +1,10 @@
 ﻿using MiniProjecte.Models;
-Console.WriteLine("=== Sistema de Gestió d'Embassaments 2026 ===");
-try
-{
-    using (var db = new EstacionsContext())
-    {
-        db.Database.EnsureCreated();
-    }
 
-    Importador.Executar();
-}
-catch (Exception ex)
+using (var db = new EstacionsContext())
 {
-    Console.WriteLine("Error de connexió:");
-    Console.WriteLine(ex.Message);
-    Console.WriteLine("El contenidor Docker ha d'estar engegat");
+    db.Database.EnsureCreated();
 }
-Console.WriteLine("==============================================");
-Console.WriteLine("Prem qualsevol tecla per sortir...");
+
+Importador.Executar();
+
 Console.ReadKey();

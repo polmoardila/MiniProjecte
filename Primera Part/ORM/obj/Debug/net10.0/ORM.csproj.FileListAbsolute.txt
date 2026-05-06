@@ -154,3 +154,4 @@ C:\Users\Pau\Desktop\Projecte\MiniProjecte\Primera Part\Orm\obj\Debug\net10.0\re
 C:\Users\Pau\Desktop\Projecte\MiniProjecte\Primera Part\Orm\obj\Debug\net10.0\ORM.pdb
 C:\Users\Pau\Desktop\Projecte\MiniProjecte\Primera Part\Orm\obj\Debug\net10.0\ORM.genruntimeconfig.cache
 C:\Users\Pau\Desktop\Projecte\MiniProjecte\Primera Part\Orm\obj\Debug\net10.0\ref\ORM.dll
+C:\Users\Pau\Desktop\Projecte\MiniProjecte\Primera Part\ORM\bin\Debug\net10.0\CsvHelper.dll

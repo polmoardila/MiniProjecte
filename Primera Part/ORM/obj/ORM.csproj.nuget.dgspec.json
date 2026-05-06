@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\Orm\\ORM.csproj": {}
+    "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\ORM\\ORM.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\Orm\\ORM.csproj": {
+    "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\ORM\\ORM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\Orm\\ORM.csproj",
+        "projectUniqueName": "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\ORM\\ORM.csproj",
         "projectName": "ORM",
-        "projectPath": "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\Orm\\ORM.csproj",
+        "projectPath": "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\ORM\\ORM.csproj",
         "packagesPath": "C:\\Users\\Pau\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\Orm\\obj\\",
+        "outputPath": "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\ORM\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Pau\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -44,6 +44,10 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.1.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[10.0.7, )"
