@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORM", "ORM\ORM.csproj", "{11813FB0-92CF-60E7-98B0-13731C3F82F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{D82C56D6-B2CD-F611-9E31-04638F7EC30E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjecteEmbassaments", "API\ProjecteEmbassaments\ProjecteEmbassaments.csproj", "{642F03ED-E275-456C-59B8-0F65B5B81604}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{11813FB0-92CF-60E7-98B0-13731C3F82F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11813FB0-92CF-60E7-98B0-13731C3F82F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11813FB0-92CF-60E7-98B0-13731C3F82F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11813FB0-92CF-60E7-98B0-13731C3F82F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{642F03ED-E275-456C-59B8-0F65B5B81604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{642F03ED-E275-456C-59B8-0F65B5B81604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{642F03ED-E275-456C-59B8-0F65B5B81604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{642F03ED-E275-456C-59B8-0F65B5B81604}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{642F03ED-E275-456C-59B8-0F65B5B81604} = {D82C56D6-B2CD-F611-9E31-04638F7EC30E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {40DB95AE-21CA-4FDF-ADFD-18A254E22F88}
+	EndGlobalSection
+EndGlobal

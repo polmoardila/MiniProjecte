@@ -10,7 +10,7 @@ namespace MiniProjecte.Models
         {
             optionsBuilder
             .UseSqlServer("Server=localhost,1433;Database=sql_server_daw;User Id=sa;Password=hiqz3652#A;TrustServerCertificate=True;")
-            .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, Microsoft.Extensions.Logging.LogLevel.Information)
+            .LogTo(Console.WriteLine, LogLevel.Information)
             .EnableSensitiveDataLogging();
         }
     }

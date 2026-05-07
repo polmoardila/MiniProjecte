@@ -1,4 +1,5 @@
 using CsvHelper.Configuration.Attributes;
+using MiniProjecte.Models;
 
 public class LiniaCsv
 {
