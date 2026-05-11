@@ -1,8 +1,79 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model Web.Models.DashboardVM
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="apple-container text-center">
+    <header class="mb-5 animate-in">
+        <h1 class="display-1 fw-bold main-title">Catalunya</h1>
+        <p class="lead text-muted">Estat global de les reserves d'aigua a les Conques Internes.</p>
+    </header>
+
+    <div class="row g-4 justify-content-center mb-5">
+        <div class="col-md-5">
+            <div class="dashboard-card">
+                <span class="label">Total volum d'aigua</span>
+                <div class="value">@Model.TotalVolum.ToString("N2") <span class="unit">hm³</span></div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="dashboard-card highlight-blue">
+                <span class="label">Percentatge volum embassat</span>
+                <div class="value">@Model.PercentatgeGlobal.ToString("N1")%</div>
+                <div class="progress-bar-container">
+                    <div class="progress-fill" style="width: @Model.PercentatgeGlobal.ToString().Replace(",", ".")%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <a asp-action="LlistatEmbasaments" class="btn-apple-outline">
+            Veure totes les estacions (@Model.TotalEstacions)
+        </a>
+    </div>
 </div>
+
+<style>
+    .main-title {
+        background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.5) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -2px;
+    }
+
+    .dashboard-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
+        padding: 40px;
+        backdrop-filter: blur(10px);
+    }
+
+    .highlight-blue {
+        background: linear-gradient(145deg, #0071e3, #005bb5);
+        border: none;
+    }
+
+    .value { font-size: 3.5rem; font-weight: 700; color: white; }
+    .label { color: #a1a1a6; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 10px; display: block; }
+    
+    .btn-apple-outline {
+        border: 1px solid #0071e3;
+        color: #0071e3;
+        padding: 12px 30px;
+        border-radius: 980px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-apple-outline:hover {
+        background: #0071e3;
+        color: white;
+    }
+
+    .animate-in { animation: fadeInUp 1s ease-out; }
+    @@keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>

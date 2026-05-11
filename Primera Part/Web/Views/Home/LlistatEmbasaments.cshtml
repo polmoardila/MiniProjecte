@@ -1,0 +1,22 @@
+@model IEnumerable<EmbassamentDB.Models.Estacio>
+<div class="apple-container">
+    <h1 class="display-4 fw-bold">Estacions</h1>
+    <div class="row g-3">
+        @foreach (var item in Model)
+        {
+            <div class="col-12">
+                <a asp-action="Detalls" asp-route-id="@item.Id" class="text-decoration-none">
+                    <div class="list-card">
+                        <h3 class="text-white">@item.Nom</h3>
+                        <p class="text-muted">@item.Municipi</p>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .list-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
+    .list-card:hover { background: rgba(255,255,255,0.1); border-color: #0071e3; }
+</style>

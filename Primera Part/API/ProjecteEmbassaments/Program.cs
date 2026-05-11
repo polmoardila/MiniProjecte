@@ -17,24 +17,80 @@ IQueryable<Estacio> ObtenirDadesReals(EstacioContext ctx) =>
         Municipi = e.Municipi,
     };
 
-// Endpoints de l'API
 app.MapGet("/", () => "API del Projecte d'Embassaments.");
 
-app.MapGet("/dades", (EstacioContext ctx) => 
-    ObtenirDadesReals(ctx).ToList());
-
-app.MapGet("/dades/{id}", (int id, EstacioContext ctx) => {
-    var dades = ctx.Estacions
-        .Where(e => e.Id == id)
+app.MapGet("/estacions", async (EstacioContext ctx) => 
+    await ctx.Estacions
         .Select(e => new {
+            e.Id,
             e.Nom,
-            e.Municipi,
-            UltimaMesura = e.Mesures
-                .OrderByDescending(m => m.Data)
-                .FirstOrDefault()
-        }).FirstOrDefault();
+            e.Municipi
+        })
+        .ToListAsync());
+app.MapGet("/dashboard", async (EstacioContext ctx) => {
+    var ultimes = await ctx.Estacions
+        .Select(e => e.Mesures.OrderByDescending(m => m.Data).FirstOrDefault())
+        .Where(m => m != null)
+        .ToListAsync();
 
-    return dades is not null ? Results.Ok(dades) : Results.NotFound();
+    if (ultimes.Count == 0) {
+        return Results.Ok(new { 
+            TotalVolum = 0m, 
+            PercentatgeGlobal = 0m, 
+            TotalEstacions = 0 
+        });
+    }
+    
+    var totalVolum = ultimes.Sum(m => m.Volum);
+    var mediaPercentatge = ultimes.Average(m => m.Percentatge);
+
+    return Results.Ok(new {
+        TotalVolum = totalVolum,
+        PercentatgeGlobal = mediaPercentatge,
+        TotalEstacions = ultimes.Count
+    });
+});
+
+app.MapGet("/embasament/{id}", async (int id, int? year, int? month, string? day, EstacioContext ctx) => {
+    
+    var query = ctx.Mesures.Where(m => m.EstacioId == id);
+    var estacio = await ctx.Estacions.FindAsync(id);
+    if (estacio == null) return Results.NotFound();
+
+    // 1. FILTRAR POR DÍA (Estació i dia)
+    if (!string.IsNullOrEmpty(day) && DateTime.TryParse(day, out DateTime fechaDia)) {
+        var mesuraDia = await query.FirstOrDefaultAsync(m => m.Data.Date == fechaDia.Date);
+        return Results.Ok(new {
+            estacio.Nom,
+            estacio.Municipi,
+            UltimaMesura = mesuraDia // Devuelve el dato exacto de ese día
+        });
+    }
+
+    // 2. FILTRAR POR MES/AÑO (Estació i mes/any: mitjana dels dies)
+    if (year.HasValue && month.HasValue) {
+        var mesuresMes = await query
+            .Where(m => m.Data.Year == year && m.Data.Month == month)
+            .ToListAsync();
+
+        if (!mesuresMes.Any()) return Results.NotFound("No hi ha dades per aquest mes.");
+
+        return Results.Ok(new {
+            estacio.Nom,
+            estacio.Municipi,
+            UltimaMesura = new {
+                Data = new DateTime(year.Value, month.Value, 1),
+                // CALCULAMOS LAS MEDIAS QUE PIDE EL ENUNCIADO
+                NivellAbsolut = mesuresMes.Average(m => m.NivellAbsolut),
+                Percentatge = mesuresMes.Average(m => m.Percentatge),
+                Volum = mesuresMes.Average(m => m.Volum)
+            }
+        });
+    }
+
+    // 3. POR DEFECTO: Última medida conocida
+    var ultima = await query.OrderByDescending(m => m.Data).FirstOrDefaultAsync();
+    return Results.Ok(new { estacio.Nom, estacio.Municipi, UltimaMesura = ultima });
 });
 
 app.Run();

@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using EmbassamentDB.Models; // Namespace da sua ClassLib
+
 namespace Web;
 
 public class Program
@@ -6,29 +9,37 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        // 1. Configurar a Connection String e o DbContext
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+            ?? "Server=localhost;Database=sql_server_daw;Uid=sa;Pwd=hiqz3652#A;TrustServerCertificate=True;";
+
+        builder.Services.AddDbContext<EstacioContext>(options =>
+            options.UseSqlServer(connectionString));
+
         builder.Services.AddControllersWithViews();
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
+        // 2. Garantir que a base de dados é criada ao iniciar
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<EstacioContext>();
+            db.Database.EnsureCreated();
+        }
+
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 
         app.UseHttpsRedirection();
         app.UseRouting();
-
         app.UseAuthorization();
 
-        app.MapStaticAssets();
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}")
-            .WithStaticAssets();
+            pattern: "{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
     }
