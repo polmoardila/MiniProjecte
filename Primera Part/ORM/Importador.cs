@@ -2,7 +2,7 @@ using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
 using MiniProjecte.Models;
-
+using Microsoft.EntityFrameworkCore;
 public class Importador
 {
     public static void Executar()
@@ -23,31 +23,38 @@ public class Importador
         foreach (var csv_row in csv_reader.GetRecords<LiniaCsv>())
         {
             AfegirMesuraAlaBaseDeDades(ctx, estacionesCache, csv_row);
+            
         }
 
         ctx.SaveChanges();
         Console.WriteLine("Importació finalitzada correctament.");
     }
 
-    private static void AfegirMesuraAlaBaseDeDades(EstacionsContext ctx, List<Estacio> estacionesCache, LiniaCsv csv_row)
+private static void AfegirMesuraAlaBaseDeDades(EstacionsContext ctx, List<Estacio> estacionesCache, LiniaCsv csv_row)
+{
+    var (nombreEstacio, municipio) = ExtreuEstacioMunicipi(csv_row);
+    var estacio = CreaEstacioSiNoExisteix(ctx, estacionesCache, nombreEstacio, municipio);
+
+    // Funcions de conversió
+    decimal Convertir(string s) =>
+        decimal.TryParse(s?.Trim(' ', '"').Replace(",", "."), CultureInfo.InvariantCulture, out var n) ? n : 0;
+
+    DateTime DataMesura = DateTime.Parse(csv_row.Dia.Trim(' ', '"'));
+    decimal Nivell = Convertir(csv_row.Nivell);
+    decimal Perc = Convertir(csv_row.Percentatge);
+    decimal Vol = Convertir(csv_row.Volum);
+
+    try 
     {
-        var (nombreEstacio, municipio) = ExtreuEstacioMunicipi(csv_row);
-        var estacio = CreaEstacioSiNoExisteix(ctx, estacionesCache, nombreEstacio, municipio);
-
-        // Funció local per convertir cadenes a decimals, gestionant errors de format
-        decimal Convertir(string s) =>
-            decimal.TryParse(s?.Trim(' ', '"').Replace(",", "."), CultureInfo.InvariantCulture, out var n) ? n : 0;
-
-        // Crear una nova mesura amb les dades del CSV i associar-la a l'estació corresponent
-        ctx.Mesures.Add(new Mesura
-        {
-            Data = DateTime.Parse(csv_row.Dia.Trim(' ', '"')),
-            EstacioId = estacio.Id,
-            NivellAbsolut = Convertir(csv_row.Nivell),
-            Percentatge = Convertir(csv_row.Percentatge),
-            Volum = Convertir(csv_row.Volum)
-        });
+        // Procediment passant els paràmetres necessaris per registrar la mesura a la base de dades
+        ctx.Database.ExecuteSqlRaw("EXEC sp_RegistrarMesura {0}, {1}, {2}, {3}, {4}", 
+            DataMesura, estacio.Id, Nivell, Perc, Vol);
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error en importar fila ({nombreEstacio} - {DataMesura:dd/MM/yyyy}): {ex.Message}");
+    }
+}
 
     /// <summary>
     /// Aquesta funció comprova si una estació amb el nom donat ja existeix a la base de dades (utilitzant una cache en memòria per optimitzar les consultes). Si no existeix, crea una nova estació, l'afegeix a la base de dades i a la cache. Retorna l'estació existent o la nova estació creada.

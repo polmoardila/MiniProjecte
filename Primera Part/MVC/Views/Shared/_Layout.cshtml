@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Water Systems</title>
+    
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        :root {
+            --apple-bg: #f5f5f7; /* Gris claro típico de Apple */
+            --apple-nav: rgba(245, 245, 247, 0.72);
+            --apple-text: #1d1d1f;
+            --apple-blue: #0071e3;
+            --apple-card: #ffffff;
+        }
+
+        /* Soporte para Modo Oscuro automático según el sistema del usuario */
+        @@media (prefers-color-scheme: dark) {
+            :root {
+                --apple-bg: #000000;
+                --apple-nav: rgba(22, 22, 23, 0.8);
+                --apple-text: #f5f5f7;
+                --apple-card: #1c1c1e;
+            }
+        }
+
+        body {
+            background-color: var(--apple-bg);
+            color: var(--apple-text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased; /* Suavizado de fuente premium */
+            transition: background 0.3s ease;
+        }
+
+        /* Navbar estilo Apple: fija, borrosa y minimalista */
+        .navbar {
+            background: var(--apple-nav) !important;
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: none !important;
+            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--apple-text) !important;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-link {
+            color: var(--apple-text) !important;
+            font-size: 0.85rem;
+            opacity: 0.8;
+            font-weight: 400;
+            margin-left: 2rem;
+            transition: opacity 0.2s;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+        }
+
+        /* Contenedor de contenido estilo "Card" de Apple */
+        .main-container {
+            margin-top: 3rem;
+            border-radius: 20px;
+            padding: 40px;
+            background: var(--apple-card);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Tipografía de títulos estilo Apple */
+        h1, h2 {
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+
+        .btn-apple {
+            background-color: var(--apple-blue);
+            color: white;
+            border-radius: 980px; /* Bordes muy redondeados */
+            padding: 8px 20px;
+            font-weight: 500;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-apple:hover {
+            background-color: #0077ed;
+            transform: scale(1.02);
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding: 2rem 0;
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="me-2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                   WaterSystems
+                </a>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" asp-action="Index">Overview</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-action="Privacy">Stations</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="main-container">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="text-center">
+        <div class="container">
+            <hr style="opacity: 0.1" />
+            <p></p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

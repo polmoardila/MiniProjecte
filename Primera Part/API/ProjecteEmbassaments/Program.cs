@@ -80,7 +80,6 @@ app.MapGet("/embasament/{id}", async (int id, int? year, int? month, string? day
             estacio.Municipi,
             UltimaMesura = new {
                 Data = new DateTime(year.Value, month.Value, 1),
-                // CALCULAMOS LAS MEDIAS QUE PIDE EL ENUNCIADO
                 NivellAbsolut = mesuresMes.Average(m => m.NivellAbsolut),
                 Percentatge = mesuresMes.Average(m => m.Percentatge),
                 Volum = mesuresMes.Average(m => m.Volum)
