@@ -1,50 +1,49 @@
 @model Web.Models.EstacioDetall
 
-<div class="container mt-4">
+<div class="container mt-4 text-white"> 
     <div class="text-center mb-5">
-        <h1 class="display-4">@Model.Nom</h1>
-        <p class="lead text-muted">@Model.Municipi</p>
+        <h1 class="display-4 fw-bold">@Model.Nom</h1>
+        <p class="lead text-white-50">@Model.Municipi</p> 
     </div>
+    
     @if (Model.UltimaMesura != null)
     {
-        @* 3. Estado Actual (Métricas) *@
         <div class="row text-center g-4 mb-5">
             <div class="col-md-4">
-                <div class="p-4 border rounded shadow-sm">
-                    <h6 class="text-uppercase text-muted">Percentatge</h6>
-                    <h2 class="display-5 fw-bold">@Model.UltimaMesura.Percentatge.ToString("N1")%</h2>
-                    <div class="progress mt-2" style="height: 10px;">
+                <div class="p-4 border border-secondary rounded shadow-sm bg-dark"> 
+                    <h6 class="text-uppercase text-white-50">Percentatge</h6> 
+                    <h2 class="display-5 fw-bold text-white">@Model.UltimaMesura.Percentatge.ToString("N1")%</h2>
+                    <div class="progress mt-2" style="height: 10px; background-color: #333;">
                         <div class="progress-bar bg-primary" style="width: @Model.UltimaMesura.Percentatge.ToString().Replace(",", ".")%"></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="p-4 border rounded shadow-sm">
-                    <h6 class="text-uppercase text-muted">Volum</h6>
-                    <h2 class="display-5">@Model.UltimaMesura.Volum.ToString("N2") <small class="fs-6">hm³</small></h2>
+                <div class="p-4 border border-secondary rounded shadow-sm bg-dark">
+                    <h6 class="text-uppercase text-white-50">Volum</h6> 
+                    <h2 class="display-5 text-white">@Model.UltimaMesura.Volum.ToString("N2") <small class="fs-6 text-white-50">hm³</small></h2>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="p-4 border rounded shadow-sm">
-                    <h6 class="text-uppercase text-muted">Nivell</h6>
-                    <h2 class="display-5">@Model.UltimaMesura.NivellAbsolut.ToString("N1") <small class="fs-6">msnm</small></h2>
+                <div class="p-4 border border-secondary rounded shadow-sm bg-dark">
+                    <h6 class="text-uppercase text-white-50">Nivell Absolut</h6> 
+                    <h2 class="display-5 text-white">@Model.UltimaMesura.NivellAbsolut.ToString("N2") <small class="fs-6 text-white-50">msnm</small></h2>
                 </div>
             </div>
         </div>
 
-        @* 4. Tabla de Histórico *@
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
+        <div class="card shadow-sm bg-dark border-secondary"> 
+            <div class="card-header bg-dark text-white border-secondary">
                 <h5 class="mb-0">Històric de Mesures</h5>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
+                <table class="table table-dark table-hover align-middle mb-0"> 
+                    <thead>
                         <tr>
-                            <th>Data</th>
-                            <th>Nivell (msnm)</th>
-                            <th>Volum (hm³)</th>
-                            <th class="text-end">Percentatge (%)</th>
+                            <th class="text-white-50">Data</th>
+                            <th class="text-white-50">Nivell (msnm)</th>
+                            <th class="text-white-50">Volum (hm³)</th>
+                            <th class="text-end text-white-50">Percentatge (%)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,6 +64,6 @@
     }
     else
     {
-        <div class="alert alert-info text-center">No hi ha dades per mostrar.</div>
+        <div class="alert alert-info text-center bg-dark text-info border-info">No hi ha dades per mostrar.</div>
     }
 </div>

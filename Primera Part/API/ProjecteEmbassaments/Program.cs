@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
-// Connexió a la base de dades i definició dels models
+// connexió a la base de dades i definició dels models
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = "Server=localhost;Database=sql_server_daw;Uid=sa;Pwd=hiqz3652#A;TrustServerCertificate=True;";
 builder.Services.AddDbContext<EstacioContext>(options =>
@@ -23,9 +23,9 @@ app.MapGet("/dashboard", async (EstacioContext ctx) => {
         .Where(m => m != null)
         .ToListAsync();
 
-// Si no hi ha mesures, retornar valors per defecte
+// si no hi ha mesures, retornar valors per defecte
     if (!ultimes.Any()) return Results.Ok(new { TotalVolum = 0m, PercentatgeGlobal = 0m, TotalEstacions = 0 });
-// Calcular i retornar les estadístiques del dashboard
+// calcular i retornar les estadístiques del dashboard
     return Results.Ok(new {
         TotalVolum = ultimes.Sum(m => m.Volum),
         PercentatgeGlobal = ultimes.Average(m => m.Percentatge),
