@@ -3,8 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 // connexió a la base de dades i definició dels models
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = "Server=localhost;Database=sql_server_daw;Uid=sa;Pwd=hiqz3652#A;TrustServerCertificate=True;";
-builder.Services.AddDbContext<EstacioContext>(options =>
+var connectionString = "Server=embasaments.c8owd5colahf.us-east-1.rds.amazonaws.com,1433;Database=embasaments;User Id=admin;Password=pyqju6-buvpeP-bifto;TrustServerCertificate=True;";builder.Services.AddDbContext<EstacioContext>(options =>
     options.UseSqlServer(connectionString));
 var app = builder.Build();
 

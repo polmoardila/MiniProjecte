@@ -1,0 +1,13 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /app
+
+COPY . ./
+RUN dotnet restore "ORM/ORM.csproj"
+RUN dotnet publish "ORM/ORM.csproj" -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/out .
+COPY mesura.csv .
+
+ENTRYPOINT ["dotnet", "ORM.dll"]

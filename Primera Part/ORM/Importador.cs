@@ -10,7 +10,7 @@ public class Importador
 
         // Obtenim un csv reader:
         var csv_config = new CsvConfiguration(CultureInfo.InvariantCulture) { BadDataFound = null };
-        var csv_path = "C:\\Users\\Pau\\Desktop\\Projecte\\MiniProjecte\\Primera Part\\Arxiu CSV\\mesura.csv";
+        var csv_path = "mesura.csv";        
         using var csv_streamreader = new StreamReader(csv_path);
         using var csv_reader = new CsvReader(csv_streamreader, csv_config);
 

@@ -1,0 +1,25 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /app
+
+# 1. Copiamos todo el contenido de "Primera Part" (incluye API y ORM)
+COPY . ./
+
+# 2. Restauramos las dependencias apuntando al archivo .csproj de la API
+RUN dotnet restore "API/ProjecteEmbassaments/ProjecteEmbassaments.csproj"
+
+# 3. Compilamos y publicamos el proyecto de la API
+RUN dotnet publish "API/ProjecteEmbassaments/ProjecteEmbassaments.csproj" -c Release -o out
+
+# 4. Creamos la imagen final de ejecución
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/out .
+
+# 5. Copiamos el archivo mesura.csv dentro de la API para que lo lea el importador
+# (Asegúrate de que 'mesura.csv' esté en la carpeta raíz junto a este Dockerfile)
+COPY mesura.csv .
+
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
+
+ENTRYPOINT ["dotnet", "ProjecteEmbassaments.dll"]
